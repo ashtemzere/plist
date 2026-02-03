@@ -1,42 +1,39 @@
-name: Auto Refresh Every Hour
+name: هەموو 1 کاتژمێرێک
 
 on:
   schedule:
-    - cron: '0 * * * *'  # هەموو کاتژمێرێک
-  workflow_dispatch:      # دەستی
+    - cron: '0 * * * *'   # هەموو کاتژمێرێک
+  workflow_dispatch:       # دەستی
 
 jobs:
-  refresh:
+  نوێکردنەوە:
     runs-on: ubuntu-latest
     permissions:
-      contents: write      # ئەمە زۆر گرنگە!
+      contents: write     # گرنگترین بەشی کۆدەکە!
 
     steps:
-      - name: Checkout
+      - name: هێنانەوەی کۆد
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Update plist files
+      - name: نوێکردنی فایلەکان
         run: |
-          echo "🔄 نوێکردنەوەی فایلەکان..."
+          echo "📝 نوێکردنەوە..."
           for file in *.plist; do
-            if [ -f "$file" ]; then
-              echo "" >> "$file"
-              echo "✅ $file نوێکرایەوە"
-            fi
+            echo "   🔄 $file"
+            echo "" >> "$file"
           done
 
-      - name: Commit and Push
+      - name: ناردنی گۆڕانکاریەکان
         run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "github-actions@github.com"
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
           
-          git add -A
-          if git diff --staged --quiet; then
-            echo "📭 هیچ گۆڕانکاریەک نییە"
+          git add .
+          
+          if git diff --cached --quiet; then
+            echo "✅ هیچ گۆڕانکاریەک نییە"
           else
-            git commit -m "🔄 Auto refresh $(date +'%Y-%m-%d %H:%M UTC')"
+            git commit -m "🔄 نوێکردنەوە $(date '+%H:%M')"
             git push
-            echo "🚀 سەرکەوتوو! گۆڕانکاریەکان نێردران"
+            echo "✅ سەرکەوتوو بوون!"
           fi
