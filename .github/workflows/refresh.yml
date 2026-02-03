@@ -1,0 +1,37 @@
+name: Hourly Auto Refresh (Iraq Time)
+
+on:
+  schedule:
+    - cron: '0 * * * *'   # Every hour
+  workflow_dispatch:
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Refresh all plist files
+        run: |
+          echo "Searching for plist files..."
+          found=false
+          while IFS= read -r -d '' file; do
+            echo "Refreshing $file"
+            echo "" >> "$file"
+            found=true
+          done < <(find . -name "*.plist" -print0)
+
+          if [ "$found" = false ]; then
+            echo "Refresh at $(date -u)" > refresh.txt
+          fi
+
+      - name: Commit & Push changes
+        run: |
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
+
+          git add .
+          git diff --cached --quiet || git commit -m "🔄 Hourly auto refresh"
+          git push
