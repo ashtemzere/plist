@@ -1,43 +1,10 @@
-name: 1h Auto Refresh
-
-on:
-  schedule:
-    - cron: '0 * * * *'   # هەموو کاتژمێرێک لە دەقیقەی 0دا
-  workflow_dispatch:       # بتوانیت دەستی بکەیت بە دەست
-
-jobs:
-  refresh:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Modify plist files
-        run: |
-          echo "🔍 گەڕان بۆ فایلەکانی .plist..."
-          shopt -s nullglob
-          for file in *.plist; do
-            echo "   ✏️ نویکردنەوەی: $file"
-            echo "" >> "$file"
-          done
-          
-          # ئەگەر هیچ فایلێکی .plist نەبوو
-          shopt -u nullglob
-          if [ -z "$(find . -maxdepth 1 -name '*.plist' -print -quit)" ]; then
-            echo "⚠️  هیچ فایلێکی .plist نەدۆزرایەوە!"
-          else
-            echo "✅ هەموو فایلەکان نوێکرانەوە"
-          fi
-
-      - name: Commit & Push changes
+- name: Commit & Push changes
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
           
-          echo "📊 پشکنینی گۆڕانکاریەکان..."
           git add .
           
           if git diff --cached --quiet; then
@@ -45,8 +12,7 @@ jobs:
           else
             git commit -m "🔄 نوێکردنەوەی خۆکار (هەموو 1 کاتژمێر) $(date +'%Y-%m-%d %H:%M')"
             
-            # Push کردن بە token
-            git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git
-            git push
+            # ڕێگەی دڵنیاکەر بۆ پوش کردن
+            git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
             echo "🚀 سەرکەوتوو بوون! گۆڕانکاریەکان نێردران"
           fi
