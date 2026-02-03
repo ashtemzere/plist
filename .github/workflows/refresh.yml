@@ -1,8 +1,8 @@
-name: 24h Auto Refresh
+name: 1h Auto Refresh
 
 on:
   schedule:
-    - cron: '0 0 * * *'   # هەر ڕۆژێک کاتژمێر 00:00 UTC
+    - cron: '0 * * * *'   # هەموو کاتژمێرێک لە دەقیقەی 0دا
   workflow_dispatch:       # بتوانیت دەستی بکەیت بە دەست
 
 jobs:
@@ -26,5 +26,5 @@ jobs:
           git config user.email "action@github.com"
 
           git add .
-          git diff --cached --quiet || git commit -m "🔄 Auto refresh $(date -u)"
+          git diff --cached --quiet || git commit -m "🔄 Auto refresh every 1 hour $(date -u)"
           git push
