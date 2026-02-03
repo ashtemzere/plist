@@ -2,8 +2,8 @@ name: 24h Auto Refresh
 
 on:
   schedule:
-    - cron: '0 0 * * *'   # Daily
-  workflow_dispatch:
+    - cron: '0 0 * * *'   # هەر ڕۆژێک کاتژمێر 00:00 UTC
+  workflow_dispatch:       # بتوانیت دەستی بکەیت بە دەست
 
 jobs:
   refresh:
@@ -13,26 +13,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Refresh all plist files
+      - name: Modify plist files (trigger change)
         run: |
-          echo "Searching for plist files..."
-          found=false
-          while IFS= read -r -d '' file; do
-            echo "Refreshing $file"
+          shopt -s nullglob
+          for file in *.plist; do
             echo "" >> "$file"
-            found=true
-          done < <(find . -name "*.plist" -print0)
+          done
 
-          if [ "$found" = false ]; then
-            echo "No plist files found, creating refresh marker."
-            echo "Refresh at $(date -u)" > refresh.txt
-          fi
-
-      - name: Commit & Push changes
+      - name: Commit & Push if changed
         run: |
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
 
           git add .
-          git diff --cached --quiet || git commit -m "🔄 Auto refresh plist files"
+          git diff --cached --quiet || git commit -m "🔄 Auto refresh $(date -u)"
           git push
