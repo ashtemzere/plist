@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd Ã¢â‚¬Â¦">
+<plist version="1.0">
+<dict>
+<key>items</key>
+<array>
+<dict>
+<key>assets</key>
+<array>
+<dict>
+<key>kind</key>
+<string>software-package</string>
+<key>url</key>
+<string>https://ashtemobile.tututweak.com/ios/ipa/TikTok.ipa</string>
+</dict>
+<dict>
+<key>kind</key>
+<string>display-image</string>
+<key>url</key>
+<string>https://ashtemobile.apkomtk.com/a.png</string>
+</dict>
+<dict>
+<key>kind</key>
+<string>full-size-image</string>
+<key>url</key>
+<string>https://ashtemobile.apkomtk.com/a.png</string>
+</dict>
+</array>
+<key>metadata</key>
+<dict>
+<key>bundle-identifier</key>
+<string>com.zhiliaoapp.musically1</string>
+<key>bundle-version</key>
+<string>1.1.4</string>
+<key>kind</key>
+<string>software</string>
+<key>title</key>
+<string>
+⚜️ Telegram/ashtemobile ⚜️
+TikTok
+📥› 321.51 MB | v37.5.0 📥
+</string>
+</dict> 
+</dict>
+</array>
+</dict>
+</plist>
