@@ -2,38 +2,32 @@ name: هەموو 1 کاتژمێرێک
 
 on:
   schedule:
-    - cron: '0 * * * *'   # هەموو کاتژمێرێک
-  workflow_dispatch:       # دەستی
+    - cron: '0 * * * *'  # هەموو کاتژمێرێک لە دەقیقەی 0دا
+  workflow_dispatch:      # دەستی
 
 jobs:
-  نوێکردنەوە:
+  نوێکردن:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write     # گرنگترین بەشی کۆدەکە!
 
     steps:
-      - name: هێنانەوەی کۆد
-        uses: actions/checkout@v4
-
-      - name: نوێکردنی فایلەکان
+      # 1. هێنانەوەی کۆد
+      - uses: actions/checkout@v4
+      
+      # 2. نوێکردنی فایلەکان
+      - name: نوێکردن
         run: |
-          echo "📝 نوێکردنەوە..."
-          for file in *.plist; do
-            echo "   🔄 $file"
-            echo "" >> "$file"
+          for f in *.plist; do
+            [ -f "$f" ] && echo "" >> "$f"
           done
-
-      - name: ناردنی گۆڕانکاریەکان
+      
+      # 3. ناردنی گۆڕانکاریەکان
+      - name: ناردن
         run: |
-          git config user.name "GitHub Action"
-          git config user.email "action@github.com"
+          git config user.name "Auto Bot"
+          git config user.email "bot@github.com"
           
           git add .
-          
-          if git diff --cached --quiet; then
-            echo "✅ هیچ گۆڕانکاریەک نییە"
-          else
-            git commit -m "🔄 نوێکردنەوە $(date '+%H:%M')"
+          git diff --cached --quiet || {
+            git commit -m "🔄 نوێکردنەوە $(date +%H:%M)"
             git push
-            echo "✅ سەرکەوتوو بوون!"
-          fi
+          }
