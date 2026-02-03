@@ -1,8 +1,8 @@
-name: Hourly Auto Refresh (Iraq Time)
+name: 24h Auto Refresh
 
 on:
   schedule:
-    - cron: '0 * * * *'   # Every hour
+    - cron: '0 0 * * *'   # Daily
   workflow_dispatch:
 
 jobs:
@@ -24,6 +24,7 @@ jobs:
           done < <(find . -name "*.plist" -print0)
 
           if [ "$found" = false ]; then
+            echo "No plist files found, creating refresh marker."
             echo "Refresh at $(date -u)" > refresh.txt
           fi
 
@@ -33,5 +34,5 @@ jobs:
           git config user.email "action@github.com"
 
           git add .
-          git diff --cached --quiet || git commit -m "🔄 Hourly auto refresh"
+          git diff --cached --quiet || git commit -m "🔄 Auto refresh plist files"
           git push
