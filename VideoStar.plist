@@ -17,19 +17,19 @@
 <key>kind</key>
 <string>display-image</string>
 <key>url</key>
-<string>https://ashtemobile.tututweak.com/a.png</string>
+<string>https://ashtemobile.site/a.png</string>
 </dict>
 <dict>
 <key>kind</key>
 <string>full-size-image</string>
 <key>url</key>
-<string>https://ashtemobile.apkomtk.com/a.png</string>
+<string>https://ashtemobile.site/a.png</string>
 </dict>
 </array>
 <key>metadata</key>
 <dict>
 <key>bundle-identifier</key>
-<string>com.frontierdesign.videostar</string>
+<string>com.frontierdesign.videostarr</string>
 <key>bundle-version</key>
 <string>1.1.4</string>
 <key>kind</key>
@@ -38,7 +38,7 @@
 <string>
 ⚜️ Telegram/ashtemobile ⚜️
 VideoStar
-📥› 169.57MB | v12.2.2 📥
+📥› 438.18 MB | v 15.2.1 📥
 </string>
 </dict> 
 </dict>
